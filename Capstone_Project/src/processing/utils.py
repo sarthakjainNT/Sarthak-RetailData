@@ -1,7 +1,8 @@
 """
-This is a module in which we use utility functions where we read bronze table, clean and tranform each columns to maintain the 
+This is a module in which we use utility functions where we read bronze table, clean and tranform each columns to maintain the
 effeciency and make cast_to_jdbc_safe to avoid the type error and make the df appropriate for the jdbc.
 """
+
 from pyspark.sql.functions import (
     col,
     when,

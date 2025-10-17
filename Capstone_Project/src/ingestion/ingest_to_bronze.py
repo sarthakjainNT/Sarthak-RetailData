@@ -89,8 +89,10 @@ def validate_schema(df, schema, spark, fname, log_table, jdbc_config, quarantine
 
         # Move bad schema to quarantine
         try:
-            quarantined_df = df.select(*expected_cols) 
-            df.write.mode("append").parquet(f"{quarantine_dir}/bad_schema/")  # Quarantine the original DF
+            quarantined_df = df.select(*expected_cols)
+            df.write.mode("append").parquet(
+                f"{quarantine_dir}/bad_schema/"
+            )  # Quarantine the original DF
             logger.info(f"Quarantined bad schema for {fname} with extra columns.")
         except Exception as e:
             logger.error(f"Failed to quarantine bad schema for {fname}: {e}")
@@ -175,7 +177,15 @@ def main():
                 os.path.join(config["INPUT"], fname), header=True, inferSchema=True
             )
             df = df.transform(lower_columns)
-            df, error_count = validate_schema(df, schema, spark, fname, config["INGEST_LOG_TABLE"], jdbc_config, config["QUARANTINE_DIR"])
+            df, error_count = validate_schema(
+                df,
+                schema,
+                spark,
+                fname,
+                config["INGEST_LOG_TABLE"],
+                jdbc_config,
+                config["QUARANTINE_DIR"],
+            )
             if error_count > 0:
                 logger.info(f"Skipped invalid schema for {fname} after quarantining.")
 

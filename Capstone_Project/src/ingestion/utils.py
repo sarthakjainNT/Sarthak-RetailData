@@ -5,7 +5,7 @@ Includes helpers like log_missing_columns to keep records of files and lower_col
 """
 
 import re
-from pyspark.sql.functions import col, lit, current_timestamp,regexp_replace
+from pyspark.sql.functions import col, lit, current_timestamp, regexp_replace
 from pyspark.sql.types import StringType
 
 
@@ -38,8 +38,8 @@ def cast_and_clean(df):
             df = df.withColumn(col_name, col(col_name).cast("int"))
     for col_name in columns_to_clean:
         if col_name in df.columns:
-        # Use regexp_replace to remove commas and semicolons from the data in the column
-            df = df.withColumn(col_name, regexp_replace(col(col_name), '[,;]', ''))
+            # Use regexp_replace to remove commas and semicolons from the data in the column
+            df = df.withColumn(col_name, regexp_replace(col(col_name), "[,;]", ""))
     return df
 
 

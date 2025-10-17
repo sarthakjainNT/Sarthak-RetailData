@@ -13,6 +13,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 """ fucntion that parses JDBC credentials and file paths from .env and defaults for airflow """
+
+
 def get_config():
     try:
         config = {
